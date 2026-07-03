@@ -1,0 +1,99 @@
+{
+  "log": {
+    "level": "fatal",
+    "timestamp": true
+  },
+  "dns": {
+    "servers": [
+      {
+        "tag": "dns-local",
+        "type": "https",
+        "server": "223.5.5.5",
+        "detour": "direct"
+      },
+      {
+        "tag": "dns-remote",
+        "type": "https",
+        "server": "1.1.1.1",
+        "detour": "proxy"
+      }
+    ],
+    "rules": [
+      { "domain_keyword": ["kuaishou", "gifshow"], "server": "dns-remote" },
+      { "domain_suffix": ["yximgs.com"], "server": "dns-remote" },
+      { "rule_set": ["CN_域", "Private_域", "GoogleFCM_域"], "server": "dns-local" }
+    ],
+    "independent_cache": true
+  },
+  "inbounds": [
+    { "type": "mixed", "tag": "mixed-in", "listen": "::", "listen_port": 7890 },
+    { "type": "redirect", "tag": "redir-in", "listen": "::", "listen_port": 7891 },
+    { "type": "tproxy", "tag": "tproxy-in", "listen": "::", "listen_port": 1536 }
+  ],
+  "outbounds": [
+    { "type": "direct", "tag": "direct" },
+    { "type": "block", "tag": "reject" }
+  ],
+  "route": {
+    "default_domain_resolver": "dns-local",
+    "rule_set": [
+      { "tag": "CN_IP", "type": "remote", "format": "binary", "url": "https://cdn.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo-lite/geoip/cn.srs" },
+      { "tag": "CN_域", "type": "remote", "format": "binary", "url": "https://cdn.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/cn.srs" },
+      { "tag": "No-ads-all_域", "type": "remote", "format": "binary", "url": "https://cdn.jsdelivr.net/gh/TG-Twilight/AWAvenue-Ads-Rule@main/Filters/AWAvenue-Ads-Rule-Singbox.srs" },
+      { "tag": "XiaoHongShu_域", "type": "remote", "format": "binary", "url": "https://cdn.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/xiaohongshu.srs" },
+      { "tag": "DouYin_域", "type": "remote", "format": "binary", "url": "https://cdn.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/douyin.srs" },
+      { "tag": "BiliBili_域", "type": "remote", "format": "binary", "url": "https://cdn.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/bilibili.srs" },
+      { "tag": "BiliBili_IP", "type": "remote", "format": "binary", "url": "https://cdn.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo-lite/geoip/bilibili.srs" },
+      { "tag": "Steam_域", "type": "remote", "format": "binary", "url": "https://cdn.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/steam.srs" },
+      { "tag": "TikTok_域", "type": "remote", "format": "binary", "url": "https://cdn.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/tiktok.srs" },
+      { "tag": "Spotify_域", "type": "remote", "format": "binary", "url": "https://cdn.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/spotify.srs" },
+      { "tag": "Facebook_域", "type": "remote", "format": "binary", "url": "https://cdn.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/facebook.srs" },
+      { "tag": "Facebook_IP", "type": "remote", "format": "binary", "url": "https://cdn.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo-lite/geoip/facebook.srs" },
+      { "tag": "Telegram_域", "type": "remote", "format": "binary", "url": "https://cdn.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/telegram.srs" },
+      { "tag": "Telegram_IP", "type": "remote", "format": "binary", "url": "https://cdn.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo-lite/geoip/telegram.srs" },
+      { "tag": "YouTube_域", "type": "remote", "format": "binary", "url": "https://cdn.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/youtube.srs" },
+      { "tag": "Google_域", "type": "remote", "format": "binary", "url": "https://cdn.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/google.srs" },
+      { "tag": "Google_IP", "type": "remote", "format": "binary", "url": "https://cdn.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo-lite/geoip/google.srs" },
+      { "tag": "GoogleFCM_域", "type": "remote", "format": "binary", "url": "https://cdn.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/googlefcm.srs" },
+      { "tag": "Microsoft_域", "type": "remote", "format": "binary", "url": "https://cdn.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/microsoft.srs" },
+      { "tag": "Apple_域", "type": "remote", "format": "binary", "url": "https://cdn.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/apple.srs" },
+      { "tag": "Apple_IP", "type": "remote", "format": "binary", "url": "https://cdn.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo-lite/geoip/apple.srs" },
+      { "tag": "OpenAI_域", "type": "remote", "format": "binary", "url": "https://cdn.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/openai.srs" },
+      { "tag": "Netflix_域", "type": "remote", "format": "binary", "url": "https://cdn.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/netflix.srs" },
+      { "tag": "Netflix_IP", "type": "remote", "format": "binary", "url": "https://cdn.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo-lite/geoip/netflix.srs" },
+      { "tag": "Discord_域", "type": "remote", "format": "binary", "url": "https://cdn.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/discord.srs" },
+      { "tag": "GitHub_域", "type": "remote", "format": "binary", "url": "https://cdn.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/github.srs" },
+      { "tag": "Twitter_域", "type": "remote", "format": "binary", "url": "https://cdn.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/twitter.srs" },
+      { "tag": "Twitter_IP", "type": "remote", "format": "binary", "url": "https://cdn.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo-lite/geoip/twitter.srs" },
+      { "tag": "Private_域", "type": "remote", "format": "binary", "url": "https://cdn.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/private.srs" },
+      { "tag": "Private_IP", "type": "remote", "format": "binary", "url": "https://cdn.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo-lite/geoip/private.srs" }
+    ],
+    "rules": [
+      { "inbound": ["mixed-in", "redir-in", "tproxy-in"], "action": "sniff" },
+      { "port": [53], "action": "hijack-dns" },
+      { "port": [853], "outbound": "proxy" },
+      { "network": ["udp"], "port": [443], "action": "reject" },
+      
+      { "rule_set": ["No-ads-all_域"], "action": "reject" },
+      
+      { "process_name": ["com.ss.android.ugc.aweme"], "outbound": "proxy" },
+      { "rule_set": ["DouYin_域"], "outbound": "proxy" },
+      
+      { "process_name": ["com.smile.gifmaker", "com.kuaishou.nebula", "com.ks.yep"], "outbound": "proxy" },
+      { "domain_suffix": ["kuaishou.com", "gifshow.com", "ksapisrv.com", "yximgs.com", "kwaytv.com", "kwai.net", "kwaicdn.com"], "outbound": "proxy" },
+      { "domain_keyword": ["kuaishou", "gifshow"], "outbound": "proxy" },
+      
+      { "process_name": ["com.xingin.xhs"], "outbound": "proxy" },
+      { "rule_set": ["XiaoHongShu_域"], "outbound": "proxy" },
+      
+      { "process_name": ["tv.danmaku.bili"], "outbound": "proxy" },
+      { "rule_set": ["BiliBili_域", "BiliBili_IP"], "outbound": "proxy" },
+      
+      { "rule_set": ["Steam_域", "GitHub_域", "Discord_域", "TikTok_域", "Twitter_域", "Twitter_IP", "YouTube_域", "GoogleFCM_域", "Google_域", "Google_IP", "Netflix_域", "Netflix_IP", "Spotify_域", "Facebook_域", "Facebook_IP", "OpenAI_域", "Apple_域", "Apple_IP", "Microsoft_域", "Telegram_域", "Telegram_IP"], "outbound": "proxy" },
+      
+      { "rule_set": ["Private_域", "Private_IP", "CN_域", "CN_IP"], "outbound": "direct" }
+    ],
+    "auto_detect_interface": true,
+    "final": "proxy"
+  }
+}
